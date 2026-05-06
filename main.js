@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Mobile menu toggle
   const mobileBtn = document.querySelector('.mobile-menu-btn');
   const nav = document.querySelector('.modern-nav');
-  
+
   if (mobileBtn && nav) {
     mobileBtn.addEventListener('click', () => {
       nav.classList.toggle('active');
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
+    anchor.addEventListener('click', function (e) {
       const target = document.querySelector(this.getAttribute('href'));
       if (target) {
         e.preventDefault();
@@ -66,16 +66,16 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const submitBtn = form.querySelector('[type="submit"]');
       const originalText = submitBtn?.innerHTML;
-      
+
       if (submitBtn) {
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
         submitBtn.disabled = true;
-        
+
         setTimeout(() => {
           submitBtn.innerHTML = '<i class="fas fa-check"></i> Sent!';
           submitBtn.style.background = 'linear-gradient(135deg, #10B981 0%, #059669 100%)';
           form.reset();
-          
+
           setTimeout(() => {
             submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
@@ -127,11 +127,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Add active class to current page nav link
+  // Add active class to current page nav link
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
   const navItems = document.querySelectorAll('.nav-item > a');
   navItems.forEach(item => {
     if (item.getAttribute('href') === currentPage) {
-      item.style.color = '#FF6B00';
+      item.style.color = '#008cff';  // ← Changed to blue to match your primary color
+      item.classList.add('active');
     }
   });
 
@@ -156,13 +158,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (entry.isIntersecting) {
         const element = entry.target;
         const originalText = element.textContent;
-        
+
         // Check if there's a plus sign in the original text
         const hasPlus = originalText.includes('+');
-        
+
         // Extract the numeric value
         let number = parseInt(originalText);
-        
+
         // If it's a valid number, animate it
         if (!isNaN(number)) {
           // Store the original value
