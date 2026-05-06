@@ -1,184 +1,200 @@
-// MOVEEL LUBE - Modern Interactive JavaScript (Fixed for + signs)
+// MOVEEL LUBE — Mobile-first Interactive JS
 document.addEventListener('DOMContentLoaded', () => {
 
-  // Mobile menu toggle
+  // ─── MOBILE MENU TOGGLE ───────────────────────────────────────────────
   const mobileBtn = document.querySelector('.mobile-menu-btn');
   const nav = document.querySelector('.modern-nav');
+  const body = document.body;
 
   if (mobileBtn && nav) {
-    mobileBtn.addEventListener('click', () => {
-      nav.classList.toggle('active');
-      mobileBtn.classList.toggle('active');
-      document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
-    });
-  }
+    // Inject "Get Quote" and "Call" CTAs inside the nav on mobile
+    if (!nav.querySelector('.mobile-nav-cta')) {
+      const cta = document.createElement('div');
+      cta.className = 'mobile-nav-cta';
+      cta.innerHTML = `
+        <a href="contact.html" class="btn-primary">
+          <i class="fas fa-arrow-right"></i> Get a Quote
+        </a>
+        <a href="tel:+13105384242" class="phone-btn-full">
+          <i class="fas fa-phone-alt"></i> 310-538-4242
+        </a>`;
+      nav.appendChild(cta);
+    }
 
-  // Header scroll effect
-  const header = document.querySelector('.modern-header');
-  if (header) {
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
+    mobileBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = nav.classList.toggle('active');
+      mobileBtn.classList.toggle('active', isOpen);
+      body.style.overflow = isOpen ? 'hidden' : '';
+      mobileBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (nav.classList.contains('active') &&
+          !nav.contains(e.target) &&
+          !mobileBtn.contains(e.target)) {
+        closeNav();
       }
     });
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('active')) closeNav();
+    });
   }
 
-  // Dropdown mobile handling
+  function closeNav() {
+    if (!nav) return;
+    nav.classList.remove('active');
+    mobileBtn && mobileBtn.classList.remove('active');
+    body.style.overflow = '';
+    mobileBtn && mobileBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  // ─── DROPDOWN — MOBILE ONLY ───────────────────────────────────────────
   const dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
   dropdownTriggers.forEach(trigger => {
-    trigger.addEventListener('click', (e) => {
+    const link = trigger.querySelector(':scope > a');
+    if (!link) return;
+    link.addEventListener('click', (e) => {
       if (window.innerWidth <= 768) {
         e.preventDefault();
+        e.stopPropagation();
+        // Close siblings
+        dropdownTriggers.forEach(other => {
+          if (other !== trigger) other.classList.remove('active');
+        });
         trigger.classList.toggle('active');
       }
     });
   });
 
-  // Close mobile menu when clicking on a link
-  const navLinks = document.querySelectorAll('.modern-nav a');
-  navLinks.forEach(link => {
+  // ─── CLOSE NAV when any inner link is clicked ─────────────────────────
+  document.querySelectorAll('.modern-nav a').forEach(link => {
     link.addEventListener('click', () => {
       if (window.innerWidth <= 768) {
-        nav.classList.remove('active');
-        mobileBtn?.classList.remove('active');
-        document.body.style.overflow = '';
+        // Don't close when it's the dropdown trigger link itself
+        const parentTrigger = link.closest('.dropdown-trigger');
+        const isTopLink = parentTrigger && link === parentTrigger.querySelector(':scope > a');
+        if (!isTopLink) {
+          setTimeout(closeNav, 100);
+        }
       }
     });
   });
 
-  // Smooth scroll for anchor links
+  // ─── HEADER SCROLL EFFECT ─────────────────────────────────────────────
+  const header = document.querySelector('.modern-header');
+  if (header) {
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+  }
+
+  // ─── SMOOTH SCROLL ────────────────────────────────────────────────────
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-      const target = document.querySelector(this.getAttribute('href'));
+      const href = this.getAttribute('href');
+      if (!href || href === '#') return;
+      const target = document.querySelector(href);
       if (target) {
         e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const headerH = document.querySelector('.modern-header')?.offsetHeight || 64;
+        const top = target.getBoundingClientRect().top + window.scrollY - headerH - 8;
+        window.scrollTo({ top, behavior: 'smooth' });
       }
     });
   });
 
-  // Form submission handler
-  const forms = document.querySelectorAll('form');
-  forms.forEach(form => {
-    form.addEventListener('submit', async (e) => {
+  // ─── FORM SUBMISSION ──────────────────────────────────────────────────
+  document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const submitBtn = form.querySelector('[type="submit"]');
-      const originalText = submitBtn?.innerHTML;
-
-      if (submitBtn) {
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-        submitBtn.disabled = true;
-
+      const btn = form.querySelector('[type="submit"]');
+      if (!btn) return;
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending…';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.innerHTML = '<i class="fas fa-check"></i> Sent!';
+        btn.style.background = 'linear-gradient(135deg,#10B981 0%,#059669 100%)';
+        form.reset();
         setTimeout(() => {
-          submitBtn.innerHTML = '<i class="fas fa-check"></i> Sent!';
-          submitBtn.style.background = 'linear-gradient(135deg, #10B981 0%, #059669 100%)';
-          form.reset();
-
-          setTimeout(() => {
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-            submitBtn.style.background = '';
-          }, 3000);
-        }, 1500);
-      }
+          btn.innerHTML = orig;
+          btn.disabled = false;
+          btn.style.background = '';
+        }, 3000);
+      }, 1500);
     });
   });
 
-  // Intersection Observer for fade-in animations
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  };
-
-  const observer = new IntersectionObserver((entries) => {
+  // ─── FADE-IN CARDS ───────────────────────────────────────────────────
+  const fadeObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.style.opacity = '1';
         entry.target.style.transform = 'translateY(0)';
+        fadeObserver.unobserve(entry.target);
       }
     });
-  }, observerOptions);
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
-  const animatedElements = document.querySelectorAll('.service-card-modern, .testimonial-card, .equipment-item, .stat-card-modern');
-  animatedElements.forEach(el => {
+  document.querySelectorAll(
+    '.service-card-modern, .testimonial-card, .equipment-glass-item, .stat-card-modern, .equipment-card-modern'
+  ).forEach(el => {
     el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'all 0.6s ease';
-    observer.observe(el);
+    el.style.transform = 'translateY(28px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    fadeObserver.observe(el);
   });
 
-  // Parallax effect for hero particles
-  const heroParticles = document.querySelector('.hero-particles');
-  if (heroParticles) {
-    document.addEventListener('mousemove', (e) => {
-      const x = (e.clientX / window.innerWidth) * 20;
-      const y = (e.clientY / window.innerHeight) * 20;
-      heroParticles.style.transform = `translate(${x}px, ${y}px)`;
-    });
-  }
-
-  // Floating animation for hero cards
-  const floatingCards = document.querySelectorAll('.floating-card');
-  floatingCards.forEach((card, index) => {
-    card.style.animation = `float ${4 + index}s ease-in-out infinite`;
-    card.style.animationDelay = `${index * 0.5}s`;
-  });
-
-  // Add active class to current page nav link
-  // Add active class to current page nav link
+  // ─── ACTIVE NAV LINK ─────────────────────────────────────────────────
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-  const navItems = document.querySelectorAll('.nav-item > a');
-  navItems.forEach(item => {
+  document.querySelectorAll('.nav-item > a').forEach(item => {
     if (item.getAttribute('href') === currentPage) {
-      item.style.color = '#008cff';  // ← Changed to blue to match your primary color
-      item.classList.add('active');
+      item.style.color = 'var(--primary)';
     }
   });
 
-  // FIXED: Number counter that preserves + signs properly
-  const animateNumber = (element, target, hasPlus = false) => {
+  // ─── STAT COUNTER ────────────────────────────────────────────────────
+  const animateNum = (el, target, hasPlus) => {
     let current = 0;
-    const increment = target / 50;
-    const timer = setInterval(() => {
-      current += increment;
+    const step = target / 50;
+    const t = setInterval(() => {
+      current += step;
       if (current >= target) {
-        element.textContent = hasPlus ? Math.floor(target) + '+' : Math.floor(target);
-        clearInterval(timer);
+        el.textContent = target + (hasPlus ? '+' : '');
+        clearInterval(t);
       } else {
-        element.textContent = hasPlus ? Math.floor(current) + '+' : Math.floor(current);
+        el.textContent = Math.floor(current) + (hasPlus ? '+' : '');
       }
     }, 20);
   };
 
-  // FIXED: Observer that handles numbers with + signs correctly
-  const statObserver = new IntersectionObserver((entries) => {
+  const statObs = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        const element = entry.target;
-        const originalText = element.textContent;
-
-        // Check if there's a plus sign in the original text
-        const hasPlus = originalText.includes('+');
-
-        // Extract the numeric value
-        let number = parseInt(originalText);
-
-        // If it's a valid number, animate it
-        if (!isNaN(number)) {
-          // Store the original value
-          element.setAttribute('data-original', originalText);
-          element.textContent = '0' + (hasPlus ? '+' : '');
-          animateNumber(element, number, hasPlus);
+        const el = entry.target;
+        const text = el.textContent;
+        const hasPlus = text.includes('+');
+        const num = parseInt(text);
+        if (!isNaN(num)) {
+          el.textContent = '0' + (hasPlus ? '+' : '');
+          animateNum(el, num, hasPlus);
         }
-        statObserver.unobserve(element);
+        statObs.unobserve(el);
       }
     });
   }, { threshold: 0.5 });
 
-  // Observe all stat-number elements
-  document.querySelectorAll('.stat-number').forEach(el => {
-    statObserver.observe(el);
+  document.querySelectorAll('.stat-number').forEach(el => statObs.observe(el));
+
+  // ─── RESIZE: reset nav if resized to desktop ─────────────────────────
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+      closeNav();
+      dropdownTriggers.forEach(t => t.classList.remove('active'));
+    }
   });
 });
