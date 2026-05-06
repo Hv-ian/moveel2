@@ -4,8 +4,8 @@
    ============================================ */
 
 :root {
-  --primary: #ff0000;
-  --primary-dark: #e50000;
+  --primary: #008cff;
+  --primary-dark: #008cff;
   --primary-light: #FFE0B2;
   --navy: #0A1628;
   --navy-dark: #050D1A;
@@ -19,7 +19,7 @@
   --gray-200: #F0F0F5;
   --gray-100: #F8F8FA;
   --white: #FFFFFF;
-  --gradient: linear-gradient(135deg, #ff0000 0%, #ff0000 100%);
+  --gradient: linear-gradient(135deg, #008cff 0%, #008cff 100%);
   --gradient-dark: linear-gradient(135deg, #0A1628 0%, #0F1E3A 100%);
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
