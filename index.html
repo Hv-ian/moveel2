@@ -371,23 +371,24 @@
             </div>
           </div>
           <div class="contact-form-modern">
-            <form id="contactForm">
+            <form id="contactForm" action="https://formspree.io/f/xqenwglk" method="POST">
+              <input type="hidden" name="_subject" value="New Quote Request - Moveel Lube" />
               <div class="form-row">
                 <div class="form-group">
-                  <input type="text" placeholder="First Name" required />
+                  <input type="text" name="first_name" placeholder="First Name" required />
                 </div>
                 <div class="form-group">
-                  <input type="text" placeholder="Last Name" required />
+                  <input type="text" name="last_name" placeholder="Last Name" required />
                 </div>
               </div>
               <div class="form-group">
-                <input type="email" placeholder="Email Address" required />
+                <input type="email" name="email" placeholder="Email Address" required />
               </div>
               <div class="form-group">
-                <input type="tel" placeholder="Phone Number" />
+                <input type="tel" name="phone" placeholder="Phone Number" />
               </div>
               <div class="form-group">
-                <select required>
+                <select name="service" required>
                   <option value="">Select Service Needed</option>
                   <option>Bulk DEF Delivery</option>
                   <option>DEF Totes / IBC</option>
@@ -397,7 +398,7 @@
                 </select>
               </div>
               <div class="form-group">
-                <textarea placeholder="Tell us about your delivery needs..." rows="3"></textarea>
+                <textarea name="message" placeholder="Tell us about your delivery needs..." rows="3"></textarea>
               </div>
               <button type="submit" class="btn-primary full-width">Send Message <i
                   class="fas fa-paper-plane"></i></button>

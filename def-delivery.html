@@ -141,18 +141,19 @@
         <p>Fill out the form and a Moveel Lube specialist will contact you with pricing and delivery options.</p>
       </div>
       <div class="quote-form-modern" style="max-width: 700px; margin: 0 auto;">
-        <form id="defQuoteForm">
+        <form id="defQuoteForm" action="https://formspree.io/f/xqenwglk" method="POST">
+          <input type="hidden" name="_subject" value="New DEF Quote Request - Moveel Lube" />
           <div class="form-row">
-            <div class="form-group"><input type="text" placeholder="First Name *" required /></div>
-            <div class="form-group"><input type="text" placeholder="Last Name *" required /></div>
+            <div class="form-group"><input type="text" name="first_name" placeholder="First Name *" required /></div>
+            <div class="form-group"><input type="text" name="last_name" placeholder="Last Name *" required /></div>
           </div>
-          <div class="form-group"><input type="email" placeholder="Email Address *" required /></div>
+          <div class="form-group"><input type="email" name="email" placeholder="Email Address *" required /></div>
           <div class="form-row">
-            <div class="form-group"><input type="tel" placeholder="Phone Number" /></div>
-            <div class="form-group"><input type="text" placeholder="Delivery ZIP Code *" required /></div>
+            <div class="form-group"><input type="tel" name="phone" placeholder="Phone Number" /></div>
+            <div class="form-group"><input type="text" name="zip_code" placeholder="Delivery ZIP Code *" required /></div>
           </div>
           <div class="form-group">
-            <select required>
+            <select name="volume" required>
               <option value="">Estimated Volume</option>
               <option>Under 250 gal</option>
               <option>250–500 gal</option>
@@ -161,7 +162,7 @@
               <option>5,000+ gal</option>
             </select>
           </div>
-          <div class="form-group"><textarea placeholder="Delivery frequency, site access notes, or questions…"
+          <div class="form-group"><textarea name="message" placeholder="Delivery frequency, site access notes, or questions…"
               rows="3"></textarea></div>
           <button type="submit" class="btn-primary full-width">Request DEF Quote <i
               class="fas fa-paper-plane"></i></button>
