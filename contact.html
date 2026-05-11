@@ -66,14 +66,13 @@
         <div class="contact-info">
           <span class="contact-badge">Get in Touch</span>
           <h2>Let's Talk About Your Needs</h2>
-          <p>Whether you need bulk DEF delivery, emergency oil service, or equipment solutions, our team is here to help
-            24/7.</p>
+          <p>Whether you need bulk DEF delivery, emergency oil service, or equipment solutions, our team is here to help 24/7.</p>
           <div class="contact-details">
             <div class="contact-detail"><i class="fas fa-phone-alt"></i>
               <div><strong>Call Us 24/7</strong><a href="tel:+13105384242">310-538-4242</a></div>
             </div>
             <div class="contact-detail"><i class="fas fa-envelope"></i>
-              <div><strong>Email Us</strong><a href="mailto:info@moveel.com">Jackmaks@moveellube.com</a></div>
+              <div><strong>Email Us</strong><a href="mailto:Jackmaks@moveellube.com">Jackmaks@moveellube.com</a></div>
             </div>
             <div class="contact-detail"><i class="fas fa-map-marker-alt"></i>
               <div><strong>Visit Us</strong><span>16226 Minnesota Ave, Paramount, CA 90723</span></div>
@@ -81,17 +80,18 @@
           </div>
         </div>
         <div class="contact-form-modern">
-          <form id="contactForm">
+          <form id="contactForm" action="https://formspree.io/f/xqenwglk" method="POST">
+            <input type="hidden" name="_subject" value="New Quote Request - Moveel Lube" />
             <div class="form-row">
-              <div class="form-group"><input type="text" placeholder="First Name *" required /></div>
-              <div class="form-group"><input type="text" placeholder="Last Name *" required /></div>
+              <div class="form-group"><input type="text" name="first_name" placeholder="First Name *" required /></div>
+              <div class="form-group"><input type="text" name="last_name" placeholder="Last Name *" required /></div>
             </div>
-            <div class="form-group"><input type="email" placeholder="Email Address *" required /></div>
-            <div class="form-group"><input type="tel" placeholder="Phone Number" /></div>
-            <div class="form-group"><input type="text" placeholder="Company Name" /></div>
-            <div class="form-group"><input type="text" placeholder="Delivery ZIP Code" /></div>
+            <div class="form-group"><input type="email" name="email" placeholder="Email Address *" required /></div>
+            <div class="form-group"><input type="tel" name="phone" placeholder="Phone Number" /></div>
+            <div class="form-group"><input type="text" name="company" placeholder="Company Name" /></div>
+            <div class="form-group"><input type="text" name="zip_code" placeholder="Delivery ZIP Code" /></div>
             <div class="form-group">
-              <select required>
+              <select name="service" required>
                 <option value="">Service Needed *</option>
                 <option>Bulk DEF Delivery</option>
                 <option>DEF Totes / IBC</option>
@@ -102,10 +102,8 @@
                 <option>Fleet Program</option>
               </select>
             </div>
-            <div class="form-group"><textarea placeholder="Tell us about your delivery needs..." rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn-primary full-width">Send Message <i
-                class="fas fa-paper-plane"></i></button>
+            <div class="form-group"><textarea name="message" placeholder="Tell us about your delivery needs..." rows="3"></textarea></div>
+            <button type="submit" class="btn-primary full-width">Send Message <i class="fas fa-paper-plane"></i></button>
           </form>
         </div>
       </div>
@@ -210,7 +208,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2025 Moveel Lube. All rights reserved.</p>
+        <p>&copy; 2026 Moveel Lube. All rights reserved.</p>
       </div>
     </div>
   </footer>

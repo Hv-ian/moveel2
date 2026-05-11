@@ -107,25 +107,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ─── FORM SUBMISSION ──────────────────────────────────────────────────
+ // ─── FORM SUBMISSION ──────────────────────────────────────────────────
   document.querySelectorAll('form').forEach(form => {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
+    form.addEventListener('submit', function(e) {
       const btn = form.querySelector('[type="submit"]');
       if (!btn) return;
-      const orig = btn.innerHTML;
-      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending…';
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
       btn.disabled = true;
-      setTimeout(() => {
-        btn.innerHTML = '<i class="fas fa-check"></i> Sent!';
-        btn.style.background = 'linear-gradient(135deg,#10B981 0%,#059669 100%)';
-        form.reset();
-        setTimeout(() => {
-          btn.innerHTML = orig;
-          btn.disabled = false;
-          btn.style.background = '';
-        }, 3000);
-      }, 1500);
     });
   });
 
