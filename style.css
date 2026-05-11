@@ -2314,3 +2314,122 @@ img {
   max-width: 100%;
   height: auto;
 }
+/* ---- Google Maps Section ---- */
+.map-section {
+  padding: 80px 0;
+  background: var(--bg-secondary, #f8f9fa);
+}
+
+.map-wrapper {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+  background: #fff;
+}
+
+.map-info-bar {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 24px 36px;
+  background: #fff;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.map-info-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 180px;
+}
+
+.map-info-item i {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #c0392b, #e74c3c);
+  color: #fff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.map-info-item div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.map-info-item strong {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #999;
+  font-weight: 600;
+}
+
+.map-info-item span,
+.map-info-item a {
+  font-size: 0.9rem;
+  color: #222;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.map-info-item a:hover {
+  color: #c0392b;
+}
+
+.map-info-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(0,0,0,0.1);
+  flex-shrink: 0;
+}
+
+.map-directions-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #c0392b, #e74c3c);
+  color: #fff;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  margin-left: auto;
+}
+
+.map-directions-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(192, 57, 43, 0.35);
+}
+
+.map-embed-container {
+  width: 100%;
+  height: 420px;
+  display: block;
+}
+
+.map-embed-container iframe {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .map-info-bar {
+    padding: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .map-info-divider { display: none; }
+  .map-directions-btn { width: 100%; justify-content: center; margin-left: 0; }
+  .map-embed-container { height: 300px; }
+}
